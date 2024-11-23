@@ -1,0 +1,19 @@
+{
+  "name": "dump-files",
+  "version": "1.0.0",
+  "description": "CLI tool to dump multiple files into one with filename headers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "dump-files": "index.js"
+  },
+  "keywords": [
+    "cli",
+    "files",
+    "concatenate"
+  ],
+  "author": "",
+  "license": "ISC"
+}
