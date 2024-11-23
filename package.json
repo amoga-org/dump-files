@@ -5,7 +5,8 @@
   "main": "index.js",
   "files": [
     "index.js",
-    "constants.js"
+    "constants.js",
+    "helpers.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
