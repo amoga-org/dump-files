@@ -2,7 +2,7 @@
 
 A simple CLI tool to combine multiple files into a single markdown file, with each file's content prefixed by its filename as a header.
 
-> Note: This tool was created with the help of Claude (Anthropic) on Nov 23, 2024
+> Note: This tool was created with the help of Claude (Anthropic)
 
 ## Installation
 
@@ -118,4 +118,5 @@ Feel free to open issues and pull requests!
 
 ## Credits
 
-This tool was created with the assistance of Claude (Anthropic) as part of a CLI tool development exercise. The implementation includes file handling, directory traversal, and smart filtering features to make file dumping more convenient and safe.
+This tool was created with the assistance of Claude (Anthropic). 
+The implementation includes file handling, directory traversal, and smart filtering features to make file dumping more convenient and safe.
