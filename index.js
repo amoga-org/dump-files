@@ -8,6 +8,34 @@ const {
   CONFIG,
 } = require("./constants");
 
+async function getFilesInDirectory(dir = ".", results = []) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      // Skip blacklisted directories
+      if (!DEFAULT_BLACKLIST.directories.includes(entry.name)) {
+        // Recursively get files from subdirectories
+        await getFilesInDirectory(fullPath, results);
+      }
+    } else if (
+      !DEFAULT_BLACKLIST.files.some((pattern) => {
+        if (pattern.includes("*")) {
+          const regex = new RegExp("^" + pattern.replace("*", ".*") + "$");
+          return regex.test(entry.name);
+        }
+        return entry.name === pattern;
+      })
+    ) {
+      results.push(fullPath);
+    }
+  }
+
+  return results;
+}
+
 async function isTextFile(filePath) {
   try {
     const ext = path.extname(filePath).toLowerCase();
