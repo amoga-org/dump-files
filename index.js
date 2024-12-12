@@ -57,12 +57,6 @@ async function dumpFiles() {
     let processedFiles = 0;
     let skippedFiles = 0;
 
-    output += `# File Dump\n\n`;
-    output += `Generated on: ${new Date().toLocaleString()}\n`;
-    output += `Directory: ${process.cwd()}\n`;
-    output += `Total files: ${filePatterns.length}\n\n`;
-    output += `---\n\n`;
-
     for (const pattern of filePatterns) {
       if (path.resolve(pattern) === path.resolve(outputFile)) {
         console.log("Skipping output file:", pattern);
