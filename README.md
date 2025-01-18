@@ -1,6 +1,6 @@
 # dump-files
 
-A simple CLI tool to combine multiple files into a single markdown file, with each file's content prefixed by its filename as a header.
+A lightweight, zero-dependency CLI tool to combine multiple files into a single markdown file, with each file's content prefixed by its filename as a header.
 
 > Note: This tool was created with the help of Claude (Anthropic)
 
@@ -18,12 +18,14 @@ npx dump-files --output combined.txt
 # Dump specific files
 npx dump-files *.js *.ts --output code.md
 
-# Dump files excluding specific patterns
-npx dump-files --output combined.md
+# Dump files from specific directory
+cd your/directory
+npx dump-files
 ```
 
 ## Features
 
+- Zero dependencies - runs anywhere with Node.js
 - Automatically combines files into a single markdown document
 - Uses filename as header (# filename) for each file's content
 - Default output file is `output.md` if not specified
@@ -57,41 +59,36 @@ The following are automatically excluded:
 
 #### File Extensions
 
-- .exe
-- .bin
-- .dat
-- .db
-- .sqlite
-- .dll
-- .so
-- .jpg, .jpeg, .png, .gif, .bmp, .ico, .svg
-- .mp3, .wav, .ogg, .m4a, .flac
-- .mp4, .avi, .mkv, .mov, .wmv, .flv
-- .zip, .rar, .7z, .tar, .gz, .bz2
-- .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx
-- .ttf, .otf, .woff, .woff2
-- .pyc, .pyo, .o, .class
+- Executables: .exe, .bin, .dll, .so
+- Data files: .dat, .db, .sqlite
+- Media: .jpg, .jpeg, .png, .gif, .bmp, .ico, .svg
+- Audio: .mp3, .wav, .ogg, .m4a, .flac
+- Video: .mp4, .avi, .mkv, .mov, .wmv, .flv
+- Archives: .zip, .rar, .7z, .tar, .gz, .bz2
+- Documents: .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx
+- Fonts: .ttf, .otf, .woff, .woff2
+- Compiled: .pyc, .pyo, .o, .class
 
 ### Additional Features
 
 - Skips binary files automatically
+- Zero external dependencies
 - Prevents infinite loops by excluding output file
 - Provides detailed console feedback during processing
 - Handles errors gracefully
-- Respects .gitignore patterns
 - Case-insensitive license file exclusion
 
 ## Examples
 
 ```bash
 # Combine all JavaScript files
-dump-files *.js --output javascript.md
+npx dump-files *.js --output javascript.md
 
 # Combine all files in current directory
-dump-files
+npx dump-files
 
 # Combine specific files
-dump-files file1.txt file2.js --output combined.md
+npx dump-files file1.txt file2.js --output combined.md
 ```
 
 ## Output Format
@@ -120,15 +117,23 @@ The tool will:
 - Provide feedback about skipped files
 - Continue processing even if some files fail
 
-## License
+## Size Limits
 
-This project is licensed under the GNU General Public License v3 (GPL-3.0) - see the [LICENSE](LICENSE) file for details.
+To ensure reliable operation:
+
+- Maximum file size: 5MB per file
+- Maximum number of files: 500
+- Binary files are automatically excluded
 
 ## Contributing
 
 Feel free to open issues and pull requests!
 
+## License
+
+This project is licensed under the GNU General Public License v3 (GPL-3.0) - see the [LICENSE](LICENSE) file for details.
+
 ## Credits
 
 This tool was created with the assistance of Claude (Anthropic).
-The implementation includes file handling, directory traversal, gitignore support, and smart filtering features to make file dumping more convenient and safe.
+The implementation includes file handling, directory traversal, and smart filtering features to make file dumping more convenient and safe.

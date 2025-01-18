@@ -1,6 +1,6 @@
 {
   "name": "dump-files",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "CLI tool to dump multiple files into one with filename headers",
   "type": "commonjs",
   "main": "index.js",
