@@ -1,33 +1,56 @@
 const fs = require("fs").promises;
 const path = require("path");
+const ignore = require("ignore");
 const {
   DEFAULT_BLACKLIST,
   TEXT_FILE_EXTENSIONS,
   CONFIG,
 } = require("./constants");
 
-async function getFilesInDirectory(dir = ".", results = []) {
+async function loadGitignore(dir = ".") {
+  try {
+    const gitignorePath = path.join(dir, ".gitignore");
+    const content = await fs.readFile(gitignorePath, "utf8");
+    return ignore().add(content.split("\n"));
+  } catch (err) {
+    return ignore();
+  }
+}
+
+async function getFilesInDirectory(dir = ".", results = [], ig = null) {
+  if (!ig) {
+    ig = await loadGitignore(dir);
+  }
+
   const entries = await fs.readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
+    const relativePath = path.relative(process.cwd(), fullPath);
+
+    if (ig.ignores(relativePath)) {
+      continue;
+    }
 
     if (entry.isDirectory()) {
-      // Skip blacklisted directories
       if (!DEFAULT_BLACKLIST.directories.includes(entry.name)) {
-        // Recursively get files from subdirectories
-        await getFilesInDirectory(fullPath, results);
+        await getFilesInDirectory(fullPath, results, ig);
       }
-    } else if (
-      !DEFAULT_BLACKLIST.files.some((pattern) => {
+    } else {
+      const isBlacklisted = DEFAULT_BLACKLIST.files.some((pattern) => {
         if (pattern.includes("*")) {
-          const regex = new RegExp("^" + pattern.replace("*", ".*") + "$");
+          const regex = new RegExp(
+            "^" + pattern.replace(/\*/g, ".*") + "$",
+            "i"
+          );
           return regex.test(entry.name);
         }
-        return entry.name === pattern;
-      })
-    ) {
-      results.push(fullPath);
+        return entry.name.toLowerCase() === pattern.toLowerCase();
+      });
+
+      if (!isBlacklisted) {
+        results.push(fullPath);
+      }
     }
   }
 

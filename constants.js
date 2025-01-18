@@ -7,10 +7,11 @@ const DEFAULT_BLACKLIST = {
     "*.lock",
     "package-lock.json",
     "yarn.lock",
+    "LICENSE*",
+    "license*",
+    "COPYING*",
   ],
-  // Extended list of binary and non-text extensions
   extensions: [
-    // Executables and binaries
     ".exe",
     ".bin",
     ".dat",
@@ -18,7 +19,6 @@ const DEFAULT_BLACKLIST = {
     ".sqlite",
     ".dll",
     ".so",
-    // Media files
     ".jpg",
     ".jpeg",
     ".png",
@@ -37,14 +37,12 @@ const DEFAULT_BLACKLIST = {
     ".mov",
     ".wmv",
     ".flv",
-    // Archive files
     ".zip",
     ".rar",
     ".7z",
     ".tar",
     ".gz",
     ".bz2",
-    // Document formats
     ".pdf",
     ".doc",
     ".docx",
@@ -52,12 +50,10 @@ const DEFAULT_BLACKLIST = {
     ".xlsx",
     ".ppt",
     ".pptx",
-    // Font files
     ".ttf",
     ".otf",
     ".woff",
     ".woff2",
-    // Other binary formats
     ".pyc",
     ".pyo",
     ".o",
@@ -66,7 +62,6 @@ const DEFAULT_BLACKLIST = {
 };
 
 const TEXT_FILE_EXTENSIONS = new Set([
-  // Programming languages
   ".js",
   ".jsx",
   ".ts",
@@ -88,14 +83,12 @@ const TEXT_FILE_EXTENSIONS = new Set([
   ".pl",
   ".sh",
   ".bash",
-  // Web files
   ".html",
   ".htm",
   ".css",
   ".scss",
   ".sass",
   ".less",
-  // Data formats
   ".json",
   ".xml",
   ".yaml",
@@ -103,19 +96,16 @@ const TEXT_FILE_EXTENSIONS = new Set([
   ".toml",
   ".ini",
   ".conf",
-  // Documentation
   ".md",
   ".markdown",
   ".txt",
   ".rst",
   ".asciidoc",
-  // Configuration
   ".env",
   ".gitignore",
   ".dockerignore",
   ".eslintrc",
   ".prettierrc",
-  // Other text formats
   ".csv",
   ".tsv",
   ".sql",
@@ -124,7 +114,7 @@ const TEXT_FILE_EXTENSIONS = new Set([
 
 const CONFIG = {
   MAX_FILES: 500,
-  MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB in bytes
+  MAX_FILE_SIZE: 5 * 1024 * 1024,
   DEFAULT_OUTPUT_FILE: "output.md",
 };
 

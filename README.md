@@ -4,27 +4,22 @@ A simple CLI tool to combine multiple files into a single markdown file, with ea
 
 > Note: This tool was created with the help of Claude (Anthropic)
 
-## Installation
-
-```bash
-# Install globally
-npm install -g dump-files
-
-# Or use directly with npx
-npx dump-files
-```
-
 ## Usage
+
+No installation required! Use directly with npx:
 
 ```bash
 # Basic usage - dumps all files into output.md
-dump-files
+npx dump-files
 
 # Specify output file
-dump-files --output combined.txt
+npx dump-files --output combined.txt
 
 # Dump specific files
-dump-files *.js *.ts --output code.md
+npx dump-files *.js *.ts --output code.md
+
+# Dump files excluding specific patterns
+npx dump-files --output combined.md
 ```
 
 ## Features
@@ -34,6 +29,8 @@ dump-files *.js *.ts --output code.md
 - Default output file is `output.md` if not specified
 - Recursive directory scanning
 - Smart file filtering
+- Respects .gitignore patterns
+- License file exclusion
 
 ### Default Blacklist
 
@@ -55,6 +52,8 @@ The following are automatically excluded:
 - \*.lock
 - package-lock.json
 - yarn.lock
+- LICENSE files (LICENSE, license.txt, COPYING, etc.)
+- Files matching patterns in .gitignore
 
 #### File Extensions
 
@@ -63,6 +62,15 @@ The following are automatically excluded:
 - .dat
 - .db
 - .sqlite
+- .dll
+- .so
+- .jpg, .jpeg, .png, .gif, .bmp, .ico, .svg
+- .mp3, .wav, .ogg, .m4a, .flac
+- .mp4, .avi, .mkv, .mov, .wmv, .flv
+- .zip, .rar, .7z, .tar, .gz, .bz2
+- .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx
+- .ttf, .otf, .woff, .woff2
+- .pyc, .pyo, .o, .class
 
 ### Additional Features
 
@@ -70,6 +78,8 @@ The following are automatically excluded:
 - Prevents infinite loops by excluding output file
 - Provides detailed console feedback during processing
 - Handles errors gracefully
+- Respects .gitignore patterns
+- Case-insensitive license file exclusion
 
 ## Examples
 
@@ -105,6 +115,8 @@ The tool will:
 - Skip binary files
 - Skip unreadable files
 - Skip blacklisted files and directories
+- Skip files matching .gitignore patterns
+- Skip license files
 - Provide feedback about skipped files
 - Continue processing even if some files fail
 
@@ -118,5 +130,5 @@ Feel free to open issues and pull requests!
 
 ## Credits
 
-This tool was created with the assistance of Claude (Anthropic). 
-The implementation includes file handling, directory traversal, and smart filtering features to make file dumping more convenient and safe.
+This tool was created with the assistance of Claude (Anthropic).
+The implementation includes file handling, directory traversal, gitignore support, and smart filtering features to make file dumping more convenient and safe.

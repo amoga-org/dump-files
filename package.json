@@ -2,23 +2,31 @@
   "name": "dump-files",
   "version": "1.0.0",
   "description": "CLI tool to dump multiple files into one with filename headers",
+  "type": "commonjs",
   "main": "index.js",
+  "bin": "./index.js",
   "files": [
     "index.js",
     "constants.js",
-    "helpers.js"
+    "helpers.js",
+    "README.md"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "publishConfig": {
+    "access": "public"
   },
-  "bin": {
-    "dump-files": "index.js"
+  "scripts": {
+    "start": "node index.js"
   },
   "keywords": [
     "cli",
     "files",
-    "concatenate"
+    "concatenate",
+    "dump",
+    "markdown"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "GPL-3.0",
+  "dependencies": {
+    "ignore": "^5.2.4"
+  }
 }
