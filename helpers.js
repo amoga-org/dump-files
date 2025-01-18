@@ -1,25 +1,53 @@
+// helpers.js
 const fs = require("fs").promises;
 const path = require("path");
-const ignore = require("ignore");
 const {
   DEFAULT_BLACKLIST,
   TEXT_FILE_EXTENSIONS,
   CONFIG,
 } = require("./constants");
 
+function parseGitignorePatterns(content) {
+  return content
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"))
+    .map((pattern) => {
+      // Remove trailing slashes
+      pattern = pattern.replace(/\/$/, "");
+
+      // Convert glob patterns to regex
+      pattern = pattern
+        .replace(/\*/g, ".*")
+        .replace(/\?/g, ".")
+        .replace(/\[.*?\]/g, ".");
+
+      return new RegExp(`^${pattern}$`);
+    });
+}
+
 async function loadGitignore(dir = ".") {
   try {
     const gitignorePath = path.join(dir, ".gitignore");
     const content = await fs.readFile(gitignorePath, "utf8");
-    return ignore().add(content.split("\n"));
+    return parseGitignorePatterns(content);
   } catch (err) {
-    return ignore();
+    return [];
   }
 }
 
-async function getFilesInDirectory(dir = ".", results = [], ig = null) {
-  if (!ig) {
-    ig = await loadGitignore(dir);
+function isPathIgnored(filePath, patterns) {
+  const normalizedPath = filePath.replace(/\\/g, "/");
+  return patterns.some((pattern) => pattern.test(normalizedPath));
+}
+
+async function getFilesInDirectory(
+  dir = ".",
+  results = [],
+  gitignorePatterns = null
+) {
+  if (!gitignorePatterns) {
+    gitignorePatterns = await loadGitignore(dir);
   }
 
   const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -28,13 +56,13 @@ async function getFilesInDirectory(dir = ".", results = [], ig = null) {
     const fullPath = path.join(dir, entry.name);
     const relativePath = path.relative(process.cwd(), fullPath);
 
-    if (ig.ignores(relativePath)) {
+    if (isPathIgnored(relativePath, gitignorePatterns)) {
       continue;
     }
 
     if (entry.isDirectory()) {
       if (!DEFAULT_BLACKLIST.directories.includes(entry.name)) {
-        await getFilesInDirectory(fullPath, results, ig);
+        await getFilesInDirectory(fullPath, results, gitignorePatterns);
       }
     } else {
       const isBlacklisted = DEFAULT_BLACKLIST.files.some((pattern) => {

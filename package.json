@@ -1,6 +1,6 @@
 {
   "name": "dump-files",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "CLI tool to dump multiple files into one with filename headers",
   "type": "commonjs",
   "main": "index.js",
@@ -15,7 +15,8 @@
     "access": "public"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "echo \"No tests specified\""
   },
   "keywords": [
     "cli",
@@ -25,8 +26,5 @@
     "markdown"
   ],
   "author": "",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "ignore": "^5.2.4"
-  }
+  "license": "GPL-3.0"
 }
